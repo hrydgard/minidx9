@@ -27,13 +27,14 @@ namespace D2D1
     // Forward declared IdentityMatrix function to allow matrix class to use
     // these constructors.
     // 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_MATRIX_3X2_F
     IdentityMatrix();
 
     //
     // The default trait type for objects in D2D is float.
-    // 
+    //
     template<typename Type>
     struct TypeTraits
     {
@@ -41,7 +42,7 @@ namespace D2D1
         typedef D2D1_SIZE_F   Size;
         typedef D2D1_RECT_F   Rect;
     };
-    
+
     template<>
     struct TypeTraits<UINT32>
     {
@@ -49,8 +50,10 @@ namespace D2D1
         typedef D2D1_SIZE_U   Size;
         typedef D2D1_RECT_U   Rect;
     };
-        
-    static inline
+
+    static
+    COM_DECLSPEC_NOTHROW
+    inline
     FLOAT FloatMax()
     {
         #ifdef FLT_MAX
@@ -59,11 +62,12 @@ namespace D2D1
             return 3.402823466e+38F;
         #endif
     }
-    
+
     //
     // Construction helpers
     //
     template<typename Type>
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     typename TypeTraits<Type>::Point
     Point2(
@@ -72,10 +76,11 @@ namespace D2D1
         )
     {
         typename TypeTraits<Type>::Point point = { x, y };
-    
+
         return point;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_POINT_2F
     Point2F(
@@ -86,6 +91,7 @@ namespace D2D1
         return Point2<FLOAT>(x, y);
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_POINT_2U
     Point2U(
@@ -95,20 +101,22 @@ namespace D2D1
     {
         return Point2<UINT32>(x, y);
     }
-    
+
     template<typename Type>
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     typename TypeTraits<Type>::Size
     Size(
         Type width,
-        Type height 
+        Type height
         )
     {
         typename TypeTraits<Type>::Size size = { width, height };
-    
+
         return size;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_SIZE_F
     SizeF(
@@ -119,6 +127,7 @@ namespace D2D1
         return Size<FLOAT>(width, height);
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_SIZE_U
     SizeU(
@@ -127,11 +136,12 @@ namespace D2D1
         )
     {
         return Size<UINT32>(width, height);
-    }    
-    
+    }
+
     template<typename Type>
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
-    typename TypeTraits<Type>::Rect        
+    typename TypeTraits<Type>::Rect
     Rect(
         Type left,
         Type top,
@@ -140,22 +150,24 @@ namespace D2D1
         )
     {
         typename TypeTraits<Type>::Rect rect = { left, top, right, bottom };
-    
+
         return rect;
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_RECT_F
     RectF(
         FLOAT left = 0.f,
         FLOAT top = 0.f,
-        FLOAT right = 0.f, 
+        FLOAT right = 0.f,
         FLOAT bottom = 0.f
         )
     {
         return Rect<FLOAT>(left, top, right, bottom);
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_RECT_U
     RectU(
@@ -168,116 +180,125 @@ namespace D2D1
         return Rect<UINT32>(left, top, right, bottom);
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_RECT_F
     InfiniteRect()
     {
         D2D1_RECT_F rect = { -FloatMax(), -FloatMax(), FloatMax(),  FloatMax() };
-    
+
         return rect;
     }
-        
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
-    D2D1_ARC_SEGMENT  
+    D2D1_ARC_SEGMENT
     ArcSegment(
-        __in CONST D2D1_POINT_2F &point,
-        __in CONST D2D1_SIZE_F &size,
-        __in FLOAT rotationAngle,
-        __in D2D1_SWEEP_DIRECTION sweepDirection,
-        __in D2D1_ARC_SIZE arcSize
+        _In_ CONST D2D1_POINT_2F &point,
+        _In_ CONST D2D1_SIZE_F &size,
+        _In_ FLOAT rotationAngle,
+        _In_ D2D1_SWEEP_DIRECTION sweepDirection,
+        _In_ D2D1_ARC_SIZE arcSize
         )
     {
         D2D1_ARC_SEGMENT arcSegment = { point, size, rotationAngle, sweepDirection, arcSize };
-    
+
         return arcSegment;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_BEZIER_SEGMENT
     BezierSegment(
-        __in CONST D2D1_POINT_2F &point1,
-        __in CONST D2D1_POINT_2F &point2,
-        __in CONST D2D1_POINT_2F &point3
+        _In_ CONST D2D1_POINT_2F &point1,
+        _In_ CONST D2D1_POINT_2F &point2,
+        _In_ CONST D2D1_POINT_2F &point3
         )
     {
         D2D1_BEZIER_SEGMENT bezierSegment = { point1, point2, point3 };
-    
+
         return bezierSegment;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_ELLIPSE
     Ellipse(
-        __in CONST D2D1_POINT_2F &center,
+        _In_ CONST D2D1_POINT_2F &center,
         FLOAT radiusX,
         FLOAT radiusY
         )
     {
         D2D1_ELLIPSE ellipse;
-    
+
         ellipse.point = center;
         ellipse.radiusX = radiusX;
         ellipse.radiusY = radiusY;
-    
+
         return ellipse;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_ROUNDED_RECT
     RoundedRect(
-        __in CONST D2D1_RECT_F &rect,
+        _In_ CONST D2D1_RECT_F &rect,
         FLOAT radiusX,
         FLOAT radiusY
         )
     {
         D2D1_ROUNDED_RECT roundedRect;
-    
+
         roundedRect.rect = rect;
         roundedRect.radiusX = radiusX;
         roundedRect.radiusY = radiusY;
-    
+
         return roundedRect;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_BRUSH_PROPERTIES
     BrushProperties(
-        __in FLOAT opacity = 1.0,
-        __in CONST D2D1_MATRIX_3X2_F &transform = D2D1::IdentityMatrix()
+        _In_ FLOAT opacity = 1.0,
+        _In_ CONST D2D1_MATRIX_3X2_F &transform = D2D1::IdentityMatrix()
         )
     {
         D2D1_BRUSH_PROPERTIES brushProperties;
-    
+
         brushProperties.opacity = opacity;
         brushProperties.transform = transform;
-    
+
         return brushProperties;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_GRADIENT_STOP
     GradientStop(
         FLOAT position,
-        __in CONST D2D1_COLOR_F &color
+        _In_ CONST D2D1_COLOR_F &color
         )
     {
         D2D1_GRADIENT_STOP gradientStop = { position, color };
-    
+
         return gradientStop;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_QUADRATIC_BEZIER_SEGMENT
     QuadraticBezierSegment(
-        __in CONST D2D1_POINT_2F &point1,
-        __in CONST D2D1_POINT_2F &point2
+        _In_ CONST D2D1_POINT_2F &point1,
+        _In_ CONST D2D1_POINT_2F &point2
         )
     {
         D2D1_QUADRATIC_BEZIER_SEGMENT quadraticBezier = { point1, point2 };
-    
+
         return quadraticBezier;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_STROKE_STYLE_PROPERTIES
     StrokeStyleProperties(
@@ -291,7 +312,7 @@ namespace D2D1
         )
     {
         D2D1_STROKE_STYLE_PROPERTIES strokeStyleProperties;
-    
+
         strokeStyleProperties.startCap = startCap;
         strokeStyleProperties.endCap = endCap;
         strokeStyleProperties.dashCap = dashCap;
@@ -299,10 +320,11 @@ namespace D2D1
         strokeStyleProperties.miterLimit = miterLimit;
         strokeStyleProperties.dashStyle = dashStyle;
         strokeStyleProperties.dashOffset = dashOffset;
-    
+
         return strokeStyleProperties;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_BITMAP_BRUSH_PROPERTIES
     BitmapBrushProperties(
@@ -312,69 +334,73 @@ namespace D2D1
         )
     {
         D2D1_BITMAP_BRUSH_PROPERTIES bitmapBrushProperties;
-    
+
         bitmapBrushProperties.extendModeX = extendModeX;
         bitmapBrushProperties.extendModeY = extendModeY;
         bitmapBrushProperties.interpolationMode = interpolationMode;
-    
+
         return bitmapBrushProperties;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES
     LinearGradientBrushProperties(
-        __in CONST D2D1_POINT_2F &startPoint,
-        __in CONST D2D1_POINT_2F &endPoint
+        _In_ CONST D2D1_POINT_2F &startPoint,
+        _In_ CONST D2D1_POINT_2F &endPoint
         )
     {
         D2D1_LINEAR_GRADIENT_BRUSH_PROPERTIES linearGradientBrushProperties;
-    
+
         linearGradientBrushProperties.startPoint = startPoint;
         linearGradientBrushProperties.endPoint = endPoint;
-    
+
         return linearGradientBrushProperties;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES
     RadialGradientBrushProperties(
-        __in CONST D2D1_POINT_2F &center,
-        __in CONST D2D1_POINT_2F &gradientOriginOffset,
+        _In_ CONST D2D1_POINT_2F &center,
+        _In_ CONST D2D1_POINT_2F &gradientOriginOffset,
         FLOAT radiusX,
         FLOAT radiusY
         )
     {
         D2D1_RADIAL_GRADIENT_BRUSH_PROPERTIES radialGradientBrushProperties;
-    
+
         radialGradientBrushProperties.center = center;
         radialGradientBrushProperties.gradientOriginOffset = gradientOriginOffset;
         radialGradientBrushProperties.radiusX = radiusX;
         radialGradientBrushProperties.radiusY = radiusY;
-    
+
         return radialGradientBrushProperties;
     }
-    
+
     //
     // PixelFormat
     // 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_PIXEL_FORMAT
     PixelFormat(
-        __in DXGI_FORMAT dxgiFormat = DXGI_FORMAT_UNKNOWN,
-        __in D2D1_ALPHA_MODE alphaMode = D2D1_ALPHA_MODE_UNKNOWN
+        _In_ DXGI_FORMAT dxgiFormat = DXGI_FORMAT_UNKNOWN,
+        _In_ D2D1_ALPHA_MODE alphaMode = D2D1_ALPHA_MODE_UNKNOWN
         )
     {
         D2D1_PIXEL_FORMAT pixelFormat;
-    
+
         pixelFormat.format = dxgiFormat;
         pixelFormat.alphaMode = alphaMode;
-    
+
         return pixelFormat;
     }
-    
+
     //
     // Bitmaps
-    //
+    // 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_BITMAP_PROPERTIES
     BitmapProperties(
@@ -394,61 +420,64 @@ namespace D2D1
 
     //
     // Render Targets
-    //
+    // 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_RENDER_TARGET_PROPERTIES
     RenderTargetProperties(
         D2D1_RENDER_TARGET_TYPE type =  D2D1_RENDER_TARGET_TYPE_DEFAULT,
-        __in CONST D2D1_PIXEL_FORMAT &pixelFormat = D2D1::PixelFormat(),
+        _In_ CONST D2D1_PIXEL_FORMAT &pixelFormat = D2D1::PixelFormat(),
         FLOAT dpiX = 0.0,
         FLOAT dpiY = 0.0,
         D2D1_RENDER_TARGET_USAGE usage = D2D1_RENDER_TARGET_USAGE_NONE,
-        D2D1_FEATURE_LEVEL  minLevel = D2D1_FEATURE_LEVEL_DEFAULT       
+        D2D1_FEATURE_LEVEL  minLevel = D2D1_FEATURE_LEVEL_DEFAULT
         )
     {
         D2D1_RENDER_TARGET_PROPERTIES renderTargetProperties;
-    
+
         renderTargetProperties.type = type;
         renderTargetProperties.pixelFormat = pixelFormat;
         renderTargetProperties.dpiX = dpiX;
         renderTargetProperties.dpiY = dpiY;
         renderTargetProperties.usage = usage;
         renderTargetProperties.minLevel = minLevel;
-    
+
         return renderTargetProperties;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_HWND_RENDER_TARGET_PROPERTIES
     HwndRenderTargetProperties(
-        __in HWND hwnd,
-        __in D2D1_SIZE_U pixelSize = D2D1::Size(static_cast<UINT>(0), static_cast<UINT>(0)),
-        __in D2D1_PRESENT_OPTIONS presentOptions = D2D1_PRESENT_OPTIONS_NONE
+        _In_ HWND hwnd,
+        _In_ D2D1_SIZE_U pixelSize = D2D1::Size(static_cast<UINT32>(0), static_cast<UINT32>(0)),
+        _In_ D2D1_PRESENT_OPTIONS presentOptions = D2D1_PRESENT_OPTIONS_NONE
         )
     {
         D2D1_HWND_RENDER_TARGET_PROPERTIES hwndRenderTargetProperties;
-    
+
         hwndRenderTargetProperties.hwnd = hwnd;
         hwndRenderTargetProperties.pixelSize = pixelSize;
         hwndRenderTargetProperties.presentOptions = presentOptions;
-    
+
         return hwndRenderTargetProperties;
     }
-    
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_LAYER_PARAMETERS
     LayerParameters(
-        __in CONST D2D1_RECT_F &contentBounds = D2D1::InfiniteRect(),
-        __in_opt ID2D1Geometry *geometricMask = NULL,
+        _In_ CONST D2D1_RECT_F &contentBounds = D2D1::InfiniteRect(),
+        _In_opt_ ID2D1Geometry *geometricMask = NULL,
         D2D1_ANTIALIAS_MODE maskAntialiasMode = D2D1_ANTIALIAS_MODE_PER_PRIMITIVE,
         D2D1_MATRIX_3X2_F maskTransform = D2D1::IdentityMatrix(),
         FLOAT opacity = 1.0,
-        __in_opt ID2D1Brush *opacityBrush = NULL,
+        _In_opt_ ID2D1Brush *opacityBrush = NULL,
         D2D1_LAYER_OPTIONS layerOptions = D2D1_LAYER_OPTIONS_NONE
         )
     {
         D2D1_LAYER_PARAMETERS layerParameters = { 0 };
-    
+
         layerParameters.contentBounds = contentBounds;
         layerParameters.geometricMask = geometricMask;
         layerParameters.maskAntialiasMode = maskAntialiasMode;
@@ -456,10 +485,11 @@ namespace D2D1
         layerParameters.opacity = opacity;
         layerParameters.opacityBrush = opacityBrush;
         layerParameters.layerOptions = layerOptions;
-    
+
         return layerParameters;
-    }       
-    
+    }
+
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_DRAWING_STATE_DESCRIPTION
     DrawingStateDescription(
@@ -467,23 +497,23 @@ namespace D2D1
         D2D1_TEXT_ANTIALIAS_MODE textAntialiasMode = D2D1_TEXT_ANTIALIAS_MODE_DEFAULT,
         D2D1_TAG tag1 = 0,
         D2D1_TAG tag2 = 0,
-        __in const D2D1_MATRIX_3X2_F &transform = D2D1::IdentityMatrix()
+        _In_ const D2D1_MATRIX_3X2_F &transform = D2D1::IdentityMatrix()
         )
     {
         D2D1_DRAWING_STATE_DESCRIPTION drawingStateDescription;
-    
+
         drawingStateDescription.antialiasMode = antialiasMode;
         drawingStateDescription.textAntialiasMode = textAntialiasMode;
         drawingStateDescription.tag1 = tag1;
         drawingStateDescription.tag2 = tag2;
         drawingStateDescription.transform = transform;
-    
+
         return drawingStateDescription;
     }
 
     //
     // Colors, this enum defines a set of predefined colors.
-    // 
+    //
     class ColorF : public D2D1_COLOR_F
     {
     public:
@@ -636,6 +666,7 @@ namespace D2D1
         // Construct a color, note that the alpha value from the "rgb" component
         // is never used.
         // 
+        COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
         ColorF(
             UINT32 rgb,
@@ -645,6 +676,7 @@ namespace D2D1
             Init(rgb, a);
         }
 
+        COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
         ColorF(
             Enum knownColor,
@@ -654,79 +686,85 @@ namespace D2D1
             Init(knownColor, a);
         }
 
+        COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
         ColorF(
-            FLOAT r,
-            FLOAT g,
-            FLOAT b,
-            FLOAT a = 1.0
+            FLOAT red,
+            FLOAT green,
+            FLOAT blue,
+            FLOAT alpha = 1.0
             )
         {
-            this->r = r;
-            this->g = g;
-            this->b = b;
-            this->a = a;
+            r = red;
+            g = green;
+            b = blue;
+            a = alpha;
         }
 
     private:
 
+        COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
         void
         Init(
             UINT32 rgb,
-            FLOAT a
+            FLOAT alpha
             )
         {
-            this->r = static_cast<FLOAT>((rgb & sc_redMask) >> sc_redShift) / 255.f;
-            this->g = static_cast<FLOAT>((rgb & sc_greenMask) >> sc_greenShift) / 255.f;
-            this->b = static_cast<FLOAT>((rgb & sc_blueMask) >> sc_blueShift) / 255.f;
-            this->a = a;
+            r = static_cast<FLOAT>((rgb & sc_redMask) >> sc_redShift) / 255.f;
+            g = static_cast<FLOAT>((rgb & sc_greenMask) >> sc_greenShift) / 255.f;
+            b = static_cast<FLOAT>((rgb & sc_blueMask) >> sc_blueShift) / 255.f;
+            a = alpha;
         }
 
         static const UINT32 sc_redShift   = 16;
         static const UINT32 sc_greenShift = 8;
-        static const UINT32 sc_blueShift  = 0;    
+        static const UINT32 sc_blueShift  = 0;
 
         static const UINT32 sc_redMask = 0xff << sc_redShift;
         static const UINT32 sc_greenMask = 0xff << sc_greenShift;
-        static const UINT32 sc_blueMask = 0xff << sc_blueShift;      
+        static const UINT32 sc_blueMask = 0xff << sc_blueShift;
     };
 
     class Matrix3x2F : public D2D1_MATRIX_3X2_F
     {
     public:
 
+        COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
         Matrix3x2F(
-            FLOAT _11,
-            FLOAT _12,
-            FLOAT _21,
-            FLOAT _22,
-            FLOAT _31,
-            FLOAT _32
-            ) 
+            FLOAT m11,
+            FLOAT m12,
+            FLOAT m21,
+            FLOAT m22,
+            FLOAT m31,
+            FLOAT m32
+            )
         {
-            this->_11 = _11;
-            this->_12 = _12;
-            this->_21 = _21;
-            this->_22 = _22;
-            this->_31 = _31;
-            this->_32 = _32;
+            _11 = m11;
+            _12 = m12;
+            _21 = m21;
+            _22 = m22;
+            _31 = m31;
+            _32 = m32;
         }
 
         //
         // Creates an identity matrix
         // 
+        COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
         Matrix3x2F(
-            ) 
+            )
         {
         }
 
         //
         // Named quasi-constructors
-        // 
-        static D2D1FORCEINLINE
+        //
+        static
+        COM_DECLSPEC_NOTHROW
+        D2D1FORCEINLINE
         Matrix3x2F
         Identity()
         {
@@ -742,7 +780,9 @@ namespace D2D1
             return identity;
         }
 
-        static D2D1FORCEINLINE
+        static
+        COM_DECLSPEC_NOTHROW
+        D2D1FORCEINLINE
         Matrix3x2F
         Translation(
             D2D1_SIZE_F size
@@ -757,7 +797,9 @@ namespace D2D1
             return translation;
         }
 
-        static D2D1FORCEINLINE
+        static
+        COM_DECLSPEC_NOTHROW
+        D2D1FORCEINLINE
         Matrix3x2F
         Translation(
             FLOAT x,
@@ -768,7 +810,9 @@ namespace D2D1
         }
 
 
-        static D2D1FORCEINLINE
+        static
+        COM_DECLSPEC_NOTHROW
+        D2D1FORCEINLINE
         Matrix3x2F
         Scale(
             D2D1_SIZE_F size,
@@ -785,7 +829,9 @@ namespace D2D1
             return scale;
         }
 
-        static D2D1FORCEINLINE
+        static
+        COM_DECLSPEC_NOTHROW
+        D2D1FORCEINLINE
         Matrix3x2F
         Scale(
             FLOAT x,
@@ -796,11 +842,13 @@ namespace D2D1
             return Scale(SizeF(x, y), center);
         }
 
-        static D2D1FORCEINLINE
+        static
+        COM_DECLSPEC_NOTHROW
+        D2D1FORCEINLINE
         Matrix3x2F
         Rotation(
             FLOAT angle,
-            D2D1_POINT_2F center = D2D1::Point2F()           
+            D2D1_POINT_2F center = D2D1::Point2F()
             )
         {
             Matrix3x2F rotation;
@@ -810,7 +858,9 @@ namespace D2D1
             return rotation;
         }
 
-        static D2D1FORCEINLINE
+        static
+        COM_DECLSPEC_NOTHROW
+        D2D1FORCEINLINE
         Matrix3x2F
         Skew(
             FLOAT angleX,
@@ -828,17 +878,26 @@ namespace D2D1
         //
         // Functions for convertion from the base D2D1_MATRIX_3X2_F to this type
         // without making a copy
-        // 
-        static inline const Matrix3x2F* ReinterpretBaseType(const D2D1_MATRIX_3X2_F *pMatrix)
+        //
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        const Matrix3x2F*
+        ReinterpretBaseType(const D2D1_MATRIX_3X2_F *pMatrix)
         {
             return static_cast<const Matrix3x2F *>(pMatrix);
         }
 
-        static inline Matrix3x2F* ReinterpretBaseType(D2D1_MATRIX_3X2_F *pMatrix)
+        static
+        COM_DECLSPEC_NOTHROW
+        inline
+        Matrix3x2F*
+        ReinterpretBaseType(D2D1_MATRIX_3X2_F *pMatrix)
         {
             return static_cast<Matrix3x2F *>(pMatrix);
         }
 
+        COM_DECLSPEC_NOTHROW
         inline
         FLOAT
         Determinant() const
@@ -846,6 +905,7 @@ namespace D2D1
             return (_11 * _22) - (_12 * _21);
         }
 
+        COM_DECLSPEC_NOTHROW
         inline
         bool
         IsInvertible() const
@@ -853,6 +913,7 @@ namespace D2D1
             return !!D2D1IsMatrixInvertible(this);
         }
 
+        COM_DECLSPEC_NOTHROW
         inline
         bool
         Invert()
@@ -860,6 +921,7 @@ namespace D2D1
             return !!D2D1InvertMatrix(this);
         }
 
+        COM_DECLSPEC_NOTHROW
         inline
         bool
         IsIdentity() const
@@ -869,7 +931,8 @@ namespace D2D1
                     && _31 == 0.f && _32 == 0.f;
         }
 
-        inline 
+        COM_DECLSPEC_NOTHROW
+        inline
         void SetProduct(
             const Matrix3x2F &a,
             const Matrix3x2F &b
@@ -883,8 +946,9 @@ namespace D2D1
             _32 = a._31 * b._12 + a._32 * b._22 + b._32;
         }
 
+        COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
-        Matrix3x2F 
+        Matrix3x2F
         operator*(
             const Matrix3x2F &matrix
             ) const
@@ -896,6 +960,7 @@ namespace D2D1
             return result;
         }
 
+        COM_DECLSPEC_NOTHROW
         D2D1FORCEINLINE
         D2D1_POINT_2F
         TransformPoint(
@@ -912,6 +977,7 @@ namespace D2D1
         }
     };
 
+    COM_DECLSPEC_NOTHROW
     D2D1FORCEINLINE
     D2D1_POINT_2F
     operator*(
@@ -922,14 +988,16 @@ namespace D2D1
         return Matrix3x2F::ReinterpretBaseType(&matrix)->TransformPoint(point);
     }
 
+    COM_DECLSPEC_NOTHROW
     D2D1_MATRIX_3X2_F
     IdentityMatrix()
     {
         return Matrix3x2F::Identity();
     }
-   
+
 } // namespace D2D1
 
+COM_DECLSPEC_NOTHROW
 D2D1FORCEINLINE
 D2D1_MATRIX_3X2_F
 operator*(
@@ -937,9 +1005,26 @@ operator*(
     const D2D1_MATRIX_3X2_F &matrix2
     )
 {
-    return 
+    return
         (*D2D1::Matrix3x2F::ReinterpretBaseType(&matrix1)) *
         (*D2D1::Matrix3x2F::ReinterpretBaseType(&matrix2));
+}
+
+COM_DECLSPEC_NOTHROW
+inline
+bool
+operator==(const D2D1_SIZE_U &size1, const D2D1_SIZE_U &size2)
+{
+    return (size1.width == size2.width) && (size1.height == size2.height);
+}
+
+COM_DECLSPEC_NOTHROW
+inline
+bool
+operator==(const D2D1_RECT_U &rect1, const D2D1_RECT_U &rect2)
+{
+    return (rect1.left  == rect2.left)  && (rect1.top     == rect2.top) &&
+           (rect1.right == rect2.right) && (rect1.bottom  == rect2.bottom);
 }
 
 #endif // #ifndef D2D_USE_C_DEFINITIONS
